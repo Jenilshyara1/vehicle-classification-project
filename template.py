@@ -22,7 +22,11 @@ list_of_files = [
     "requirements.txts",
     "setup.py",
     "research/trials.ipynb",
+    "templetes/index.html",
+    "test.py"
 ]
+
+# this will create all necessary
 
 for filepath in list_of_files:
     filepath = Path(filepath)
