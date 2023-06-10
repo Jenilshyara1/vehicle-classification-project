@@ -17,4 +17,4 @@ logging.basicConfig(
     ]
 )
 
-logger=logging.getLogger("vehicleclassifier")
+logger=logging.getLogger("vehicleclassifier")   
