@@ -22,7 +22,7 @@ list_of_files = [
     "requirements.txt",
     "setup.py",
     "research/trials.ipynb",
-    "templetes/index.html",
+    "templates/index.html",
     "test.py"
 ]
 
