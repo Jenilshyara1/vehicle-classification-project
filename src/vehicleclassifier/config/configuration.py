@@ -49,7 +49,7 @@ class ConfigurationManager:
         training = self.config.training
         prepare_base_model = self.config.prepare_base_model
         params = self.params
-        training_data = "dataset\\train_data"
+        training_data = Path("dataset/train_data")
         create_directories([
             Path(training.root_dir)
         ])
@@ -70,7 +70,7 @@ class ConfigurationManager:
     def get_validation_config(self) -> EvaluationConfig:
         eval_config = EvaluationConfig(
             path_of_model="artifacts/training/model.h5",
-            training_data="dataset\\test",
+            training_data=Path("dataset/test"),
             all_params=self.params,
             params_image_size=self.params.IMAGE_SIZE,
             params_batch_size=self.params.BATCH_SIZE
