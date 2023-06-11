@@ -1,0 +1,86 @@
+schema: '2.0'
+stages:
+  prepare_base_model:
+    cmd: python src/vehicleclassifier/pipeline/stage_01_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      md5: bd8a94150c8d5c279bc02427889f6fb6
+      size: 550
+    - path: src/vehicleclassifier/pipeline/stage_01_prepare_base_model.py
+      md5: b733c98daa9f25204bfb01fb74cb1f78
+      size: 1082
+    params:
+      params.yaml:
+        CLASSES: 5
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      md5: 4007795b6b84a152033b304efa835e8f.dir
+      size: 118354424
+      nfiles: 2
+  training:
+    cmd: python src/vehicleclassifier/pipeline/stage_02_training.py
+    deps:
+    - path: artifacts/prepare_base_model
+      md5: 4007795b6b84a152033b304efa835e8f.dir
+      size: 118354424
+      nfiles: 2
+    - path: config/config.yaml
+      md5: bd8a94150c8d5c279bc02427889f6fb6
+      size: 550
+    - path: dataset/train_data
+      md5: 75ea4ccd60d30242cf2131f73726bf03.dir
+      size: 436737879
+      nfiles: 6130
+    - path: src/vehicleclassifier/components/prepare_callbacks.py
+      md5: 97da38e0bd2c93c37c4eb8f1e3106cda
+      size: 1010
+    - path: src/vehicleclassifier/pipeline/stage_02_training.py
+      md5: 850e69f908667ee3326ee82cb76b8426
+      size: 1193
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 32
+        EPOCHS: 10
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      md5: 6c2cdf5d98c9c56caf6a94943c866339
+      size: 60444160
+  evaluation:
+    cmd: python src/vehicleclassifier/pipeline/stage_03_evaluation.py
+    deps:
+    - path: artifacts/training/model.h5
+      md5: 6c2cdf5d98c9c56caf6a94943c866339
+      size: 60444160
+    - path: config/config.yaml
+      md5: bd8a94150c8d5c279bc02427889f6fb6
+      size: 550
+    - path: dataset/test
+      md5: 9212ce951ae016c3085a9ce81bec24c0.dir
+      size: 50277271
+      nfiles: 708
+    - path: src/vehicleclassifier/pipeline/stage_03_evaluation.py
+      md5: 191df19beb94da8a8aeb470bf2ca5bdd
+      size: 805
+    params:
+      params.yaml:
+        BATCH_SIZE: 32
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      md5: d26cd106a0350ddbc7c0cab809ac5889
+      size: 73

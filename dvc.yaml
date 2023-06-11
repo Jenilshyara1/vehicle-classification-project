@@ -1,9 +1,9 @@
 stages:
 
   prepare_base_model:
-    cmd: python src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+    cmd: python src/vehicleclassifier/pipeline/stage_01_prepare_base_model.py
     deps:
-      - src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+      - src/vehicleclassifier/pipeline/stage_01_prepare_base_model.py
       - config/config.yaml
     params:
       - IMAGE_SIZE
@@ -17,12 +17,12 @@ stages:
 
 
   training:
-    cmd: python src/cnnClassifier/pipeline/stage_03_training.py
+    cmd: python src/vehicleclassifier/pipeline/stage_02_training.py
     deps:
-      - src/cnnClassifier/pipeline/stage_03_training.py
-      - src/cnnClassifier/components/prepare_callbacks.py
+      - src/vehicleclassifier/pipeline/stage_02_training.py
+      - src/vehicleclassifier/components/prepare_callbacks.py
       - config/config.yaml
-      - artifacts/data_ingestion/Chicken-fecal-images
+      - dataset/train_data
       - artifacts/prepare_base_model
     params:
       - IMAGE_SIZE
@@ -34,11 +34,11 @@ stages:
 
 
   evaluation:
-    cmd: python src/cnnClassifier/pipeline/stage_04_evaluation.py
+    cmd: python src/vehicleclassifier/pipeline/stage_03_evaluation.py
     deps:
-      - src/cnnClassifier/pipeline/stage_04_evaluation.py
+      - src/vehicleclassifier/pipeline/stage_03_evaluation.py
       - config/config.yaml
-      - artifacts/data_ingestion/Chicken-fecal-images
+      - dataset/test
       - artifacts/training/model.h5
     params:
       - IMAGE_SIZE

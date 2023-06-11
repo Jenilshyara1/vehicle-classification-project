@@ -1,7 +1,7 @@
 from vehicleclassifier import logger
 from vehicleclassifier.pipeline.stage_01_prepare_base_model import PrepareBaseModelTrainingPipeline
 from vehicleclassifier.pipeline.stage_02_training import ModelTrainingPipeline
-from vehicleclassifier.pipeline.stage_03_evaluation_pipeline import EvaluationPipeline
+from vehicleclassifier.pipeline.stage_03_evaluation import EvaluationPipeline
 STAGE_NAME="prepare base model"
 
 try:
